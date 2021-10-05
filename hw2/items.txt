@@ -1,0 +1,5 @@
+SmallShield 3 1  // Format: item howmany whichquickslot(0-5)
+LargeShield 1 6  // quickslot 6 means not in quickslot
+Bandages 2 5 
+GreenTacShotGun 1 0 
+GoldScopedAR 1 1 

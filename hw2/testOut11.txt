@@ -1,0 +1,6 @@
+0: (GreenTacShotGun, 1)
+1: (GoldScopedAR, 1)
+2: empty
+3: empty
+4: empty
+5: (SmallShield, 3)

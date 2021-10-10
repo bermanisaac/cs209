@@ -3,3 +3,4 @@ LargeShield 1 6
 Bandages 2 5
 GreenTacShotGun 1 0
 GoldScopedAR 1 1
+Imposters 1 6

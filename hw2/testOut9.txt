@@ -1,0 +1,6 @@
+0: (SmallShield, 3)
+1: (LargeShield, 1)
+2: (Bandages, 2)
+3: (GreenTacShotGun, 1)
+4: (GoldScopedAR, 1)
+5: (Imposters, 1)

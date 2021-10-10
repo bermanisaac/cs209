@@ -1,5 +1,5 @@
 SmallShield 3 1
-LargeShield 1 6
+LargeShield 1 3
 Bandages 2 5
 GreenTacShotGun 1 0
 GoldScopedAR 1 1

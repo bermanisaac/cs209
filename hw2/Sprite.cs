@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic
+using System.Collections.Generic;
 
 public class Sprite {
     private Point Location;
@@ -8,7 +8,8 @@ public class Sprite {
     private uint Health;
     private uint Shield;
 
-    private Dictionary<String, int> Inventory;
+    private Dictionary<string, int> Inventory;
+    private string[] Slots;
 
     /* Default constructor
      * set all values to 0
@@ -20,6 +21,9 @@ public class Sprite {
         Vert = 0;
         Health = 0;
         Shield = 0;
+        Inventory = new Dictionary<string, int>();
+        Slots = new string[6];
+
     }
 
     /* SetState
@@ -52,6 +56,22 @@ public class Sprite {
         else
         {
             Sprite s = (Sprite) obj;
+
+            //Check arrays
+            for(int i = 0 ; i < 6; i++) {
+                if(Slots[i] == null) {
+                    if(s.Slots[i] == null) continue;
+                    else return false;
+                }
+                if(!Slots[i].Equals(s.Slots[i])) {
+                    return false;
+                }
+            }
+            foreach(KeyValuePair<string, int> value in Inventory) {
+                if(!s.Inventory.ContainsKey(value.Key) || s.Inventory[value.Key] != value.Value) {
+                    return false;
+                }
+            }
             return ((Location.Equals(s.Location)) &&
                 (Horiz == s.Horiz) &&
                 (Vert == s.Vert) &&
@@ -80,6 +100,75 @@ public class Sprite {
             "Sprite: loc({0},{1},{2}),rot({3},{4}),hs({5},{6})",
             Location.GetX(), Location.GetY(), Location.GetZ(), Horiz, Vert, Health, Shield);
     }
+
+    /* AddIten
+     * adds an item to the inventory
+     */
+    public void AddItem(string item) {
+        if(Inventory.ContainsKey(item)) {
+            Inventory[item]++;
+        } else {
+            Inventory.Add(item, 1);
+        }
+    }
+
+    /* HasItem
+     * Class-specific wrapper around the ContainsKey method
+     */
+     public bool HasItem(string item) {
+         return Inventory.ContainsKey(item) && Inventory[item] > 0;
+     }
+
+     /* PutItemInQuickSlot
+      * adds the item into the provided quickslot, removing any previous item
+      * from that quickslot. Will perform a swap if provided item is in another
+      * slot. Does not remove items from inventory
+      */
+     public void PutItemInQuickSlot(string item, uint slot) {
+         if(slot >= 6) return;
+
+         int index = Array.IndexOf(Slots, item);
+         if(index != -1) {
+             Slots[index] = Slots[slot];
+         }
+         Slots[slot] = item;
+     }
+
+     /* GetItemInQuickSlot
+      * returns the name of the item in the specified quickslot. Returns null if
+      * there is no item present.
+      */
+     public string GetItemInQuickSlot(uint slot) {
+         if(slot > 6 || Slots[slot] == null) {
+             return null;
+         }
+         return Slots[slot];
+     }
+
+     /* PrintInventory
+      * to little surprise, prints the inventory
+      */
+     public void PrintInventory() {
+         int i = 0;
+         foreach(KeyValuePair<string, int> item in Inventory) {
+             Console.WriteLine(i++ +": ("+item.Key+", "+item.Value+")");
+
+         }
+     }
+
+     /* PrintQuickSlots
+      * to little surprise, prints the inventory
+      */
+     public void PrintQuickSlots() {
+         for(int i = 0; i < 6; i++) {
+             if(Slots[i] == null) {
+                 Console.WriteLine(i + ": empty");
+                 continue;
+             }
+             Console.WriteLine(i +": ("+Slots[i]+", "+Inventory[Slots[i]]+")");
+
+         }
+     }
 
     /* HorizontalRotate
      * rotates along the horizontal axis.
